@@ -1,172 +1,463 @@
-<div class="orbit-icon oi-1" title="Education">🎓</div>
-      <div class="orbit-icon oi-2" title="Tech">💻</div>
-      <div class="orbit-icon oi-3" title="Portfolio">💼</div>
-      <div class="orbit-icon oi-4" title="Tools">🔧</div>
-      <div class="orbit-icon oi-5" title="IoT">📡</div>
-      <div class="orbit-icon oi-6" title="Research">🔬</div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zuhri Abdussalam Ashari - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #070711; --bg2: #0d0d1c; --purple: #6d28d9; --purple-l: #8b5cf6;
+      --purple-xl: #a78bfa; --cyan: #06b6d4; --text: #f1f5f9; --muted: #94a3b8;
+      --border: rgba(148, 163, 184, 0.15); --card: rgba(13, 13, 28, 0.7);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    
+    /* Background & Nav */
+    #cv { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.35; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(7, 7, 17, 0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: 'DM Mono', monospace; font-size: 0.92rem; color: #fff; text-decoration: none; letter-spacing: 0.1em; font-weight: 500; }
+    .logo em { color: var(--purple-xl); font-style: normal; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.78rem; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; transition: 0.2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--purple-xl); transition: 0.3s; }
+    .nav-links a:hover { color: var(--purple-xl); }
+    .nav-links a:hover::after { width: 100%; }
+    .ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .ham span { width: 22px; height: 1.5px; background: var(--text); display: block; transition: 0.3s; }
 
-      <div class="photo-circle">
-        <img src="https://ui-avatars.com/api/?name=Zuhri+Abdussalam&background=06b6d4&color=fff&size=256" alt="Zuhri Abdussalam Ashari" />
-      </div>
-      <div class="photo-tag">Developer & Researcher</div>
-    </div>
-  </div>
-</section>
+    /* Layout Components */
+    section { position: relative; z-index: 1; }
+    .sw { max-width: 1100px; margin: 0 auto; padding: 6rem 3rem; }
+    .slabel { font-family: 'DM Mono', monospace; font-size: 0.66rem; letter-spacing: 0.2em; color: var(--cyan); text-transform: uppercase; margin-bottom: 0.65rem; display: inline-flex; align-items: center; gap: 0.7rem; }
+    .slabel::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--cyan); }
+    .stitle { font-size: clamp(1.7rem, 3.8vw, 2.7rem); font-weight: 700; line-height: 1.15; background: linear-gradient(135deg, #fff 40%, var(--purple-xl)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2.3rem; }
 
-<section id="about" class="sw">
-  <div class="slabel">Profil Profesional</div>
-  <h2 class="stitle">Latar Belakang</h2>
-  <div class="agrid">
-    <div class="atext">
-      <p>Saya adalah mahasiswa semester 2 di Universitas Komputama Majenang dengan spesialisasi pada rekayasa perangkat lunak skala industri dan penerapan perangkat keras *Internet of Things* (IoT).</p>
-      <p>Pendekatan saya berbasis pada solusi efisien, merangkai infrastruktur sistem informasi (berbasis Laravel dan React/Next.js) dengan kapabilitas mikrokontroler presisi untuk memecahkan hambatan riil pada sektor logistik, agrikultur, dan SaaS multi-tenant.</p>
-    </div>
-    <div class="icard">
-      <div class="irow">
-        <div class="iico">🎓</div>
-        <div>
-          <div class="ilbl">Institusi Pendidikan</div>
-          <div class="ival">Universitas Komputama Majenang (Smt. 2)</div>
+    /* Hero Section */
+    #home { min-height: 100vh; display: flex; align-items: center; padding: 5rem 3rem 0; position: relative; overflow: hidden; }
+    .blob1 { position: absolute; right: -8%; top: 50%; transform: translateY(-50%); width: 55vw; height: 55vw; max-width: 620px; background: radial-gradient(ellipse, rgba(109, 40, 217, 0.16) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .blob2 { position: absolute; left: -5%; top: 10%; width: 28vw; height: 28vw; background: radial-gradient(ellipse, rgba(6, 182, 212, 0.07) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .hero-inner { display: grid; grid-template-columns: 1fr auto; gap: 5rem; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.9rem; border-radius: 20px; border: 1px solid rgba(109, 40, 217, 0.35); background: rgba(109, 40, 217, 0.08); font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--cyan); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.3rem; animation: fadeUp 0.5s 0.1s both; }
+    h1.hname { font-size: clamp(2.6rem, 5.5vw, 4.8rem); font-weight: 700; line-height: 1.08; animation: fadeUp 0.5s 0.25s both; }
+    h1.hname .n1 { display: block; color: var(--text); }
+    h1.hname .n2 { display: block; background: linear-gradient(120deg, var(--purple-xl), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hrole { margin-top: 1.1rem; font-family: 'DM Mono', monospace; font-size: 0.9rem; color: var(--muted); min-height: 1.5rem; animation: fadeUp 0.5s 0.4s both; }
+    .cur { color: var(--purple-xl); animation: blink 1s infinite; }
+    .hdesc { margin-top: 1.3rem; font-size: 0.9rem; color: var(--muted); line-height: 1.85; max-width: 450px; animation: fadeUp 0.5s 0.55s both; }
+    .hcta { margin-top: 1.7rem; display: flex; gap: 0.8rem; flex-wrap: wrap; animation: fadeUp 0.5s 0.7s both; }
+    .btn-p, .btn-o { padding: 0.7rem 1.6rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: 0.25s; }
+    .btn-p { background: var(--purple); color: #fff; box-shadow: 0 4px 18px rgba(109, 40, 217, 0.35); }
+    .btn-p:hover { background: var(--purple-l); transform: translateY(-2px); box-shadow: 0 8px 26px rgba(109, 40, 217, 0.5); }
+    .btn-o { border: 1px solid rgba(167, 139, 250, 0.4); color: var(--purple-xl); }
+    .btn-o:hover { background: rgba(109, 40, 217, 0.1); transform: translateY(-2px); border-color: var(--purple-xl); }
+
+    /* Photo Orbit Component */
+    .hphoto { position: relative; display: flex; align-items: center; justify-content: center; width: 320px; height: 320px; flex-shrink: 0; animation: fadeIn 0.8s 0.3s both; }
+    .orbit-ring { position: absolute; width: 290px; height: 290px; border-radius: 50%; border: 1.5px dashed rgba(6, 182, 212, 0.35); }
+    .photo-circle { width: 200px; height: 200px; border-radius: 50%; border: 3px solid var(--cyan); overflow: hidden; box-shadow: 0 0 28px rgba(6, 182, 212, 0.35), 0 0 60px rgba(109, 40, 217, 0.2); z-index: 2; position: relative; background: var(--bg2); display: flex; align-items: center; justify-content: center; }
+    .photo-circle svg { width: 65%; height: 65%; fill: var(--muted); }
+    .orbit-icon { position: absolute; width: 44px; height: 44px; border-radius: 50%; background: rgba(6, 182, 212, 0.12); border: 1.5px solid rgba(6, 182, 212, 0.4); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--cyan); transition: 0.3s; cursor: default; box-shadow: 0 0 12px rgba(6, 182, 212, 0.15); }
+    .orbit-icon:hover { background: rgba(6, 182, 212, 0.25); box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); transform: scale(1.12); color: #fff; }
+    .oi-1 { top: 0px; left: 50%; transform: translateX(-50%); }
+    .oi-2 { top: 38px; right: 18px; }
+    .oi-3 { bottom: 38px; right: 18px; }
+    .oi-4 { bottom: 0px; left: 50%; transform: translateX(-50%); }
+    .oi-5 { bottom: 38px; left: 18px; }
+    .oi-6 { top: 38px; left: 18px; }
+
+    /* Clock Component */
+    .clock-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; animation: fadeUp 0.65s 0.9s both; margin-top: 2rem; }
+    .clock-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+    .clock-face { width: 110px; height: 110px; border-radius: 50%; background: rgba(13, 13, 28, 0.9); border: 1.5px solid rgba(109, 40, 217, 0.35); box-shadow: 0 0 20px rgba(109, 40, 217, 0.15), inset 0 0 12px rgba(109, 40, 217, 0.08); position: relative; }
+    .clock-center { position: absolute; top: 50%; left: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--purple-xl); transform: translate(-50%, -50%); z-index: 10; box-shadow: 0 0 6px var(--purple-xl); }
+    .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px 4px 0 0; }
+    .hand-h { width: 3px; height: 28px; background: var(--purple-xl); margin-left: -1.5px; }
+    .hand-m { width: 2px; height: 36px; background: #e2e8f0; margin-left: -1px; }
+    .hand-s { width: 1px; height: 40px; background: var(--cyan); margin-left: -0.5px; }
+    .clock-digital { font-family: 'DM Mono', monospace; font-size: 1rem; font-weight: 500; letter-spacing: 0.12em; color: var(--text); margin-top: 0.3rem; }
+    .clock-date { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; }
+
+    /* Sections Content */
+    #about { background: linear-gradient(to bottom, var(--bg), var(--bg2)); }
+    .agrid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .atext p { color: var(--muted); line-height: 1.9; font-size: 0.9rem; margin-bottom: 0.85rem; }
+    .icard { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.7rem; backdrop-filter: blur(12px); position: relative; }
+    .irow { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .irow:last-child { border-bottom: none; }
+    .iico { width: 33px; height: 33px; border-radius: 8px; background: rgba(109, 40, 217, 0.15); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: var(--purple-xl); }
+    .ilbl { font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .ival { font-size: 0.84rem; font-weight: 500; }
+
+    #skills { background: var(--bg2); }
+    .skgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 1.2rem; }
+    .skcard { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; transition: 0.3s; }
+    .skcard:hover { border-color: var(--purple-l); transform: translateY(-3px); }
+    .skcat { font-family: 'DM Mono', monospace; font-size: 0.64rem; letter-spacing: 0.15em; color: var(--cyan); text-transform: uppercase; margin-bottom: 1rem; }
+    .ski { margin-bottom: 0.8rem; }
+    .skrow { display: flex; justify-content: space-between; margin-bottom: 0.35rem; }
+    .skname { font-size: 0.82rem; font-weight: 500; }
+    .skpct { font-family: 'DM Mono', monospace; font-size: 0.71rem; color: var(--purple-xl); }
+    .skbar { height: 3px; background: rgba(255, 255, 255, 0.07); border-radius: 3px; overflow: hidden; }
+    .sk-fill { height: 100%; border-radius: 3px; background: linear-gradient(to right, var(--purple), var(--cyan)); transition: 1s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    #projects { background: linear-gradient(to bottom, var(--bg2), var(--bg)); }
+    .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; }
+    .pcard { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: 0.3s; }
+    .pcard:hover { transform: translateY(-5px); border-color: rgba(139, 92, 246, 0.4); box-shadow: 0 12px 34px rgba(109, 40, 217, 0.2); }
+    .pthumb { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); }
+    .pbody { padding: 1.2rem; }
+    .ptags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+    .tag { padding: 0.16rem 0.58rem; border-radius: 20px; font-size: 0.64rem; font-family: 'DM Mono', monospace; background: rgba(109, 40, 217, 0.12); border: 1px solid rgba(109, 40, 217, 0.25); color: var(--purple-xl); }
+    .pname { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.38rem; }
+    .pdesc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+    .plinks { display: flex; gap: 0.85rem; margin-top: 0.85rem; }
+    .plink { color: var(--purple-xl); text-decoration: none; font-size: 0.74rem; font-family: 'DM Mono', monospace; transition: 0.2s; }
+    .plink:hover { color: #fff; }
+
+    #jadwal { background: var(--bg2); }
+    .jgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+    .jday { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .jhead { padding: 0.8rem 1.2rem; background: rgba(109, 40, 217, 0.1); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+    .jdname { font-weight: 700; font-size: 0.86rem; display: flex; align-items: center; gap: 0.5rem; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--purple-xl); box-shadow: 0 0 7px var(--purple-xl); }
+    .jcount { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); }
+    .jslots { padding: 0.8rem 1.2rem; display: flex; flex-direction: column; gap: 0.48rem; }
+    .slot { display: grid; grid-template-columns: 100px 1fr; gap: 0.65rem; align-items: start; padding: 0.55rem 0.75rem; border-radius: 7px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04); }
+    .stime { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--cyan); }
+    .ssubj { font-size: 0.82rem; font-weight: 500; }
+
+    #contact { background: linear-gradient(to bottom, var(--bg2), var(--bg)); text-align: center; }
+    .cdesc { font-size: 0.9rem; color: var(--muted); line-height: 1.85; max-width: 460px; margin: 0.85rem auto 0; }
+    .clinks { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.8rem; margin-top: 2.2rem; }
+    .ccard { padding: 0.75rem 1.4rem; background: var(--card); border: 1px solid var(--border); border-radius: 10px; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 0.55rem; font-size: 0.83rem; font-weight: 500; transition: 0.25s; }
+    .ccard:hover { border-color: var(--purple-l); background: rgba(109, 40, 217, 0.1); transform: translateY(-2px); }
+
+    footer { padding: 1.6rem 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); }
+    footer a { color: var(--purple-xl); text-decoration: none; }
+
+    /* Animations */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .reveal { opacity: 0; transform: translateY(15px); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* Responsive */
+    @media (max-width: 850px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .ham { display: flex; }
+      .hero-inner, .agrid, .jgrid { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
+      .hphoto { order: -1; margin: 0 auto; }
+      .hdesc, .heta { max-width: none; justify-content: center; }
+      .sw { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="cv"></canvas>
+
+  <nav>
+    <a class="logo" href="#home">ZAA<em>.</em></a>
+    <ul class="nav-links" id="nl">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#jadwal">Jadwal</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="ham" id="ham" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <section id="home">
+    <div class="blob1"></div><div class="blob2"></div>
+    <div class="hero-inner sw">
+      <div class="hero-text">
+        <div class="hero-badge">👋 Open for Collaboration</div>
+        <h1 class="hname"><span class="n1">Zuhri</span><span class="n2">Abdussalam Ashari</span></h1>
+        <div class="hrole"><span id="typed"></span><span class="cur">|</span></div>
+        <p class="hdesc">Mahasiswa Sistem Informasi Universitas Komputama Majenang. Aktif mengembangkan sistem IoT modern, arsitektur Web Full-stack, serta kewirausahaan berbasis inovasi teknologi digital.</p>
+        <div class="hcta">
+          <a href="#projects" class="btn-p">Lihat Projects</a>
+          <a href="#contact" class="btn-o">Hubungi Saya</a>
+        </div>
+        
+        <div class="clock-wrap">
+          <div class="clock-label">Waktu Sekarang &mdash; WIB</div>
+          <div class="clock-face">
+            <div class="hand hand-h" id="hh"></div>
+            <div class="hand hand-m" id="hm"></div>
+            <div class="hand hand-s" id="hs"></div>
+            <div class="clock-center"></div>
+          </div>
+          <div class="clock-digital" id="dig-time">00:00:00</div>
+          <div class="clock-date" id="dig-date">&mdash;</div>
         </div>
       </div>
-      <div class="irow">
-        <div class="iico">💼</div>
-        <div>
-          <div class="ilbl">Manajemen Operasional</div>
-          <div class="ival">Mitra Logistik Lion Parcel</div>
+
+      <div class="hphoto">
+        <div class="orbit-ring"></div>
+        <div class="orbit-icon oi-1" title="Education">🎓</div>
+        <div class="orbit-icon oi-2" title="Tech">💻</div>
+        <div class="orbit-icon oi-3" title="Portfolio">💼</div>
+        <div class="orbit-icon oi-4" title="Tools">🛠️</div>
+        <div class="orbit-icon oi-5" title="IoT">📡</div>
+        <div class="orbit-icon oi-6" title="Research">🔬</div>
+        <div class="photo-circle">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="skills" class="sw">
-  <div class="slabel">Kompetensi Teknis</div>
-  <h2 class="stitle">Keahlian Utama</h2>
-  <div class="skgrid">
-    <div class="skcard">
-      <div class="skcat">Sistem & Arsitektur Web</div>
-      <div class="ski">
-        <div class="skrow"><span class="skname">Laravel (v10-12) / PHP</span><span class="skpct">90%</span></div>
-        <div class="skbar"><div class="sk-fill" style="width:90%;"></div></div>
-      </div>
-      <div class="ski">
-        <div class="skrow"><span class="skname">Next.js & React</span><span class="skpct">85%</span></div>
-        <div class="skbar"><div class="sk-fill" style="width:85%;"></div></div>
-      </div>
-      <div class="ski">
-        <div class="skrow"><span class="skname">Tailwind CSS</span><span class="skpct">95%</span></div>
-        <div class="skbar"><div class="sk-fill" style="width:95%;"></div></div>
-      </div>
-    </div>
-    <div class="skcard">
-      <div class="skcat">Hardware & IoT</div>
-      <div class="ski">
-        <div class="skrow"><span class="skname">Mikrokontroler ESP32-S3</span><span class="skpct">85%</span></div>
-        <div class="skbar"><div class="sk-fill" style="width:85%;"></div></div>
-      </div>
-      <div class="ski">
-        <div class="skrow"><span class="skname">Blynk & Sensor Presisi</span><span class="skpct">80%</span></div>
-        <div class="skbar"><div class="sk-fill" style="width:80%;"></div></div>
-      </div>
-    </div>
-    <div class="skcard">
-      <div class="skcat">Perangkat AI & Desain</div>
-      <div class="ski">
-        <div class="skrow"><span class="skname">Figma UI/UX</span><span class="skpct">85%</span></div>
-        <div class="skbar"><div class="sk-fill" style="width:85%;"></div></div>
-      </div>
-      <div class="ski">
-        <div class="skrow"><span class="skname">GitHub Copilot & Google AI</span><span class="skpct">90%</span></div>
-        <div class="skbar"><div class="sk-fill" style="width:90%;"></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="projects" class="sw">
-  <div class="slabel">Kinerja Portofolio</div>
-  <h2 class="stitle">Eksekusi Proyek</h2>
-  <div class="pgrid">
-    <div class="pcard">
-      <div class="pthumb">🐛</div>
-      <div class="pbody">
-        <div class="ptags"><span class="tag">IoT</span><span class="tag">Hardware</span><span class="tag">Research</span></div>
-        <div class="pname">Sistem Smart-Maggot IoT</div>
-        <div class="pdesc">Rekayasa perangkat keras berbasis ESP32-S3 untuk pengawasan suhu, kelembaban, dan amonia secara *real-time* guna efisiensi budidaya BSF. Target kompetisi P2MW 2026.</div>
-        <div class="plinks"><a href="#" class="plink">Tinjau Dokumen Riset &rarr;</a></div>
-      </div>
-    </div>
-    <div class="pcard">
-      <div class="pthumb">📦</div>
-      <div class="pbody">
-        <div class="ptags"><span class="tag">Logistics</span><span class="tag">Operational</span></div>
-        <div class="pname">Infrastruktur Agen Logistik</div>
-        <div class="pdesc">Manajemen tata kelola digital agen pengiriman Lion Parcel, berfokus pada skalabilitas pelayanan lokal dan sistem top-up efisien bagi konsumen.</div>
-        <div class="plinks"><a href="#" class="plink">Lihat Analitik &rarr;</a></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="jadwal" class="sw">
-  <div class="slabel">Manajemen Waktu</div>
-  <h2 class="stitle">Jadwal Taktis</h2>
-  <div class="jnote">⚡ Akurasi penjadwalan adalah kunci efisiensi pengiriman *output* teknis dan akademis secara paralel.</div>
-  <div class="jgrid">
-    <div class="jday">
-      <div class="jhead">
-        <div class="jdname"><div class="dot"></div> Siklus Pagi - Siang</div>
-        <div class="jcount">Blok Akademis & Riset</div>
-      </div>
-      <div class="jslots">
-        <div class="slot">
-          <div class="stime">Terjadwal</div>
-          <div class="ssubj">Interaksi Manusia & Komputer (HCI) <br> <small style="color:var(--muted)">Arahan Bpk. Muhtyas Yugi</small></div>
+  <section id="about" class="reveal">
+    <div class="sw">
+      <div class="slabel">Identity</div>
+      <div class="stitle">Tentang Saya</div>
+      <div class="agrid">
+        <div class="atext">
+          <p>Saya adalah mahasiswa semester 2 Program Studi Sistem Informasi di Universitas Komputama Majenang, Cilacap. Fokus kompetensi saya mencakup rekayasa perangkat lunak berskala industri serta integrasi perangkat keras pintar.</p>
+          <p>Dalam ekosistem pengembangan web, saya mendalami arsitektur sistem multi-tenant SaaS menggunakan kerangka kerja Laravel dan ekosistem modern React/Next.js. Di sisi lain, saya aktif mengeksplorasi infrastruktur otomatisasi berbasis IoT untuk sektor agri-teknologi nyata.</p>
         </div>
-        <div class="slot">
-          <div class="stime">Terjadwal</div>
-          <div class="ssubj">Finalisasi Proposal Bisnis P2MW (Smart-Maggot)</div>
+        <div class="icard">
+          <div class="irow">
+            <div class="iico">👤</div>
+            <div>
+              <div class="ilbl">Nama Lengkap</div>
+              <div class="ival">Zuhri Abdussalam Ashari</div>
+            </div>
+          </div>
+          <div class="irow">
+            <div class="iico">🎓</div>
+            <div>
+              <div class="ilbl">Institusi</div>
+              <div class="ival">Universitas Komputama Majenang</div>
+            </div>
+          </div>
+          <div class="irow">
+            <div class="iico">🚀</div>
+            <div>
+              <div class="ilbl">Fokus Bidang</div>
+              <div class="ival">Full-Stack Dev & IoT Automation</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="jday">
-      <div class="jhead">
-        <div class="jdname"><div class="dot"></div> Siklus Sore - Malam</div>
-        <div class="jcount">Blok Operasional</div>
-      </div>
-      <div class="jslots">
-        <div class="slot">
-          <div class="stime">Taktis</div>
-          <div class="ssubj">Manajemen Kios Logistik (Lion Parcel)</div>
+  </section>
+
+  <section id="skills" class="reveal">
+    <div class="sw">
+      <div class="slabel">Expertise</div>
+      <div class="stitle">Kemampuan Teknis</div>
+      <div class="skgrid">
+        <div class="skcard">
+          <div class="skcat">Backend Developer</div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">Laravel Ecosystem</span><span class="skpct">90%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 90%"></div></div>
+          </div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">RESTful APIs Architecture</span><span class="skpct">85%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 85%"></div></div>
+          </div>
         </div>
-        <div class="slot">
-          <div class="stime">Eksploratif</div>
-          <div class="ssubj">Implementasi Kode & Uji Coba Wiring ESP32</div>
+        <div class="skcard">
+          <div class="skcat">Frontend Developer</div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">React.js & Next.js</span><span class="skpct">80%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 80%"></div></div>
+          </div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">Tailwind CSS & UI Design</span><span class="skpct">88%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 88%"></div></div>
+          </div>
+        </div>
+        <div class="skcard">
+          <div class="skcat">Hardware & System</div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">IoT Firmware (ESP32 / Blynk)</span><span class="skpct">85%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 85%"></div></div>
+          </div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">Database Systems (MySQL)</span><span class="skpct">80%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 80%"></div></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="contact" class="sw">
-  <div class="slabel">Koneksi Profesional</div>
-  <h2 class="stitle">Inisiasi Komunikasi</h2>
-  <p class="cdesc">Sistem dan infrastruktur modern tidak dibangun sendirian. Saya terbuka untuk diskusi strategis, implementasi sistem arsitektur data, dan ekspansi logistik.</p>
-  <div class="clinks">
-    <a href="mailto:emailanda@institusi.com" class="ccard"><span>✉</span> Pertanyaan Bisnis & Teknis</a>
-    <a href="#" class="ccard"><span>🐙</span> Repositori GitHub</a>
-  </div>
-</section>
+  <section id="projects" class="reveal">
+    <div class="sw">
+      <div class="slabel">Showcase</div>
+      <div class="stitle">Project Unggulan</div>
+      <div class="pgrid">
+        <div class="pcard">
+          <div class="pthumb">🐛</div>
+          <div class="pbody">
+            <div class="ptags"><span class="tag">IoT</span><span class="tag">ESP32-S3</span><span class="tag">P2MW</span></div>
+            <div class="pname">Smart-Maggot Monitoring</div>
+            <div class="pdesc">Sistem otomatisasi IoT untuk memonitor parameter suhu, kelembaban, dan kadar amonia pada budidaya Maggot BSF secara real-time. Berhasil diajukan ke portal Belmawa Kemendikbudristek.</div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pthumb">🌾</div>
+          <div class="pbody">
+            <div class="ptags"><span class="tag">Laravel</span><span class="tag">SaaS</span><span class="tag">Multi-Tenant</span></div>
+            <div class="pname">IAGRI PRO Platform</div>
+            <div class="pdesc">Sistem ERP berbasis web terintegrasi untuk manajemen multi-tenant agribisnis, peternakan, dan perikanan dilengkapi kalkulasi Harga Pokok Produksi (HPP) otomatis.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  <div>&copy; 2026 Zuhri Abdussalam Ashari. Sistem Tertutup.</div>
-  <div>
-    <a href="#home">Beranda</a> &nbsp;|&nbsp; 
-    <a href="#about">Profil</a> &nbsp;|&nbsp; 
-    <a href="#projects">Kinerja</a>
-  </div>
-</footer>
+  <section id="jadwal" class="reveal">
+    <div class="sw">
+      <div class="slabel">Academic</div>
+      <div class="stitle">Jadwal Kuliah</div>
+      <div class="jgrid">
+        <div class="jday">
+          <div class="jhead">
+            <div class="jdname"><div class="dot"></div> Senin</div>
+            <span class="jcount">3 Mata Kuliah</span>
+          </div>
+          <div class="jslots">
+            <div class="slot">
+              <span class="stime">07.30 – 09.10</span>
+              <span class="ssubj">Algoritma & Pemrograman</span>
+            </div>
+            <div class="slot">
+              <span class="stime">09.10 – 10.50</span>
+              <span class="ssubj">Matematika Diskrit</span>
+            </div>
+            <div class="slot">
+              <span class="stime">13.00 – 14.40</span>
+              <span class="ssubj">Basis Data</span>
+            </div>
+          </div>
+        </div>
+        <div class="jday">
+          <div class="jhead">
+            <div class="jdname"><div class="dot"></div> Hari Lain</div>
+            <span class="jcount">Praktikum / Mandiri</span>
+          </div>
+          <div class="jslots">
+            <div class="slot">
+              <span class="stime">Fleksibel</span>
+              <span class="ssubj">Riset IoT & Pengembangan Proyek Kewirausahaan (P2MW)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section id="contact" class="reveal">
+    <div class="sw">
+      <div class="slabel">Get In Touch</div>
+      <div class="stitle">Hubungi Saya</div>
+      <p class="cdesc">Silakan hubungi saya untuk kolaborasi riset, proyek perangkat lunak, pengembangan IoT, atau diskusi teknologi lainnya.</p>
+      <div class="clinks">
+        <a href="mailto:zuhri@example.com" class="ccard">📧 <span>Email</span></a>
+        <a href="https://github.com" target="_blank" class="ccard">💻 <span>GitHub</span></a>
+        <a href="https://linkedin.com" target="_blank" class="ccard">👔 <span>LinkedIn</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>&copy; 2026 Zuhri Abdussalam Ashari. All Rights Reserved.</div>
+    <div>Built with Precision & Standard Tech Stack</div>
+  </footer>
+
+  <script>
+    // 1. TYPING EFFECT
+    const words = ["Full-Stack Software Developer", "IoT Automation Engineer", "Tech Entrepreneur"];
+    let i = 0, timer;
+    function typingEffect() {
+      let word = words[i].split("");
+      var loopTyping = function() {
+        if (word.length > 0) {
+          document.getElementById('typed').textContent += word.shift();
+        } else {
+          setTimeout(deletingEffect, 2000); return false;
+        }
+        timer = setTimeout(loopTyping, 100);
+      };
+      loopTyping();
+    }
+    function deletingEffect() {
+      let word = words[i].split("");
+      var loopDeleting = function() {
+        if (word.length > 0) {
+          word.pop();
+          document.getElementById('typed').textContent = word.join("");
+        } else {
+          i = (words.length > i + 1) ? i + 1 : 0;
+          setTimeout(typingEffect, 500); return false;
+        }
+        timer = setTimeout(loopDeleting, 60);
+      };
+      loopDeleting();
+    }
+    typingEffect();
+
+    // 2. REAL-TIME ANALOG & DIGITAL CLOCK
+    function tickClock() {
+      const now = new Date();
+      const h = now.getHours(); const m = now.getMinutes(); const s = now.getSeconds();
+      document.getElementById('hh').style.transform = `rotate(${(h % 12) * 30 + m * 0.5}deg)`;
+      document.getElementById('hm').style.transform = `rotate(${m * 6 + s * 0.1}deg)`;
+      document.getElementById('hs').style.transform = `rotate(${s * 6}deg)`;
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('dig-time').textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+      const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+      const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+      document.getElementById('dig-date').textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    }
+    setInterval(tickClock, 1000); tickClock();
+
+    // 3. RESPONSIVE NAVIGATION MENU
+    function toggleMenu() {
+      document.getElementById('nl').classList.toggle('open');
+    }
+
+    // 4. SCROLL REVEAL ANIMATION
+    const revs = document.querySelectorAll('.reveal');
+    function checkReveal() {
+      revs.forEach(r => {
+        const top = r.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.82) r.classList.add('in');
+      });
+    }
+    window.addEventListener('scroll', checkReveal); checkReveal();
+
+    // 5. PARTICLE CANVAS BACKGROUND (Ultra Compact)
+    const cv = document.getElementById('cv'); const cx = cv.getContext('2d');
+    let pts = [];
+    function resize() { cv.width = window.innerWidth; cv.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
+    for(let i=0; i<35; i++) pts.push({x:Math.random()*cv.width, y:Math.random()*cv.height, r:Math.random()*1.5+0.5, dx:Math.random()*0.4-0.2, dy:Math.random()*0.4-0.2});
+    function draw() {
+      cx.clearRect(0,0,cv.width,cv.height); cx.fillStyle = 'rgba(167,139,250,0.4)';
+      pts.forEach(p => {
+        cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, Math.PI*2); cx.fill();
+        p.x += p.dx; p.y += p.dy;
+        if(p.x<0 || p.x>cv.width) p.dx *= -1; if(p.y<0 || p.y>cv.height) p.dy *= -1;
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
 </body>
 </html>
