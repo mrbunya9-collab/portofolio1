@@ -1,490 +1,900 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Zuhri Abdussalam Ashari — Hub Digital & FinTrack</title>
-    <link href="https://fonts.googleapis.com/css?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zuhri Abdussalam Ashari Portfolio</title>
+  <link href="https://fonts.googleapis.com/css?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #070711;
+      --bg2: #0d0d1c;
+      --purple: #6d28d9;
+      --purple-l: #8b5cf6;
+      --purple-xl: #a78bfa;
+      --cyan: #06b6d4;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --border: rgba(109, 40, 217, 0.2);
+      --card: rgba(13, 13, 28, 0.7);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    #cv { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.35; }
     
-    <style>
-        /* ==========================================
-           GLOBAL CORE ARCHITECTURE & VIEW TOGGLES
-           ========================================== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        
-        :root {
-            --bg-port: #070711;
-            --bg-dash: #0f1117;
-            --surface: #181c27;
-            --surface2: #1f2435;
-            --border: rgba(255,255,255,0.07);
-            --text-light: #f1f5f9;
-            --muted-gray: #8a90a8;
-            --accent-blue: #4f7fff;
-            --purple: #6d28d9;
-            --cyan: #06b6d4;
-            --green: #34d399;
-            --red: #f87171;
-            --sidebar-w: 230px;
-        }
+    /* NAV BAR */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(7, 7, 17, 0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'DM Mono', monospace; font-size: .92rem; color: #fff; text-decoration: none; letter-spacing: .1em;
+    }
+    .logo em { color: var(--purple-xl); font-style: normal; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: .78rem; font-family: 'DM Mono', monospace;
+      letter-spacing: .1em; text-transform: uppercase; transition: .2s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--purple-xl); transition: .3s;
+    }
+    .nav-links a:hover { color: var(--purple-xl); }
+    .nav-links a:hover::after { width: 100%; }
+    
+    .ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .ham span { width: 22px; height: 1.5px; background: var(--text); display: block; }
 
-        body {
-            background: var(--bg-port);
-            color: var(--text-light);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-        }
+    /* HERO */
+    #home {
+      min-height: 100vh; display: flex; align-items: center; padding: 0 3rem; padding-top: 5rem; position: relative; overflow: hidden;
+    }
+    .blob1 {
+      position: absolute; right: -8%; top: 50%; transform: translateY(-50%); width: 55vw; height: 55vw; max-width: 620px;
+      background: radial-gradient(ellipse, rgba(109, 40, 217, 0.16) 0%, transparent 70%); border-radius: 50%; pointer-events: none;
+    }
+    .blob2 {
+      position: absolute; left: -5%; top: 10%; width: 28vw; height: 28vw;
+      background: radial-gradient(ellipse, rgba(6, 182, 212, 0.07) 0%, transparent 70%); border-radius: 50%; pointer-events: none;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr auto; gap: 5rem; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem; padding: .3rem .9rem; border-radius: 20px;
+      border: 1px solid rgba(109, 40, 217, 0.35); background: rgba(109, 40, 217, 0.08);
+      font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--cyan); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1.3rem;
+    }
+    h1.hname { font-size: clamp(2.6rem, 5.5vw, 4.8rem); font-weight: 700; line-height: 1.08; }
+    h1.hname .n1 { display: block; color: var(--text); }
+    h1.hname .n2 {
+      display: block; background: linear-gradient(120deg, var(--purple-xl), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hrole { margin-top: 1.1rem; font-family: 'DM Mono', monospace; font-size: .9rem; color: var(--muted); min-height: 1.5rem; }
+    .cur { color: var(--purple-xl); animation: blink 1s infinite; }
+    .hdesc { margin-top: 1.3rem; font-size: .9rem; color: var(--muted); line-height: 1.85; max-width: 450px; }
+    .hcta { margin-top: 1.7rem; display: flex; gap: .8rem; flex-wrap: wrap; }
+    
+    .btn-p {
+      padding: .7rem 1.6rem; background: var(--purple); color: #fff; border-radius: 8px; text-decoration: none;
+      font-weight: 600; font-size: .85rem; transition: .25s; box-shadow: 0 4px 18px rgba(109, 40, 217, 0.35); border: none; cursor: pointer;
+    }
+    .btn-p:hover { background: var(--purple-l); transform: translateY(-2px); box-shadow: 0 8px 26px rgba(109, 40, 217, 0.5); }
+    .btn-o {
+      padding: .7rem 1.6rem; border: 1px solid rgba(167, 139, 250, 0.4); color: var(--purple-xl); border-radius: 8px;
+      text-decoration: none; font-weight: 600; font-size: .85rem; transition: .25s; background: transparent;
+    }
+    .btn-o:hover { background: rgba(109, 40, 217, 0.1); transform: translateY(-2px); border-color: var(--purple-xl); }
 
-        /* View Switching Logic State */
-        #portfolio-view { display: block; }
-        #dashboard-view { display: none; }
+    /* PHOTO ORBIT STYLE */
+    .hphoto {
+      position: relative; display: flex; align-items: center; justify-content: center; width: 320px; height: 320px; flex-shrink: 0;
+    }
+    .orbit-ring {
+      position: absolute; width: 290px; height: 290px; border-radius: 50%; border: 1.5px dashed rgba(6, 182, 212, 0.35);
+    }
+    .photo-circle {
+      width: 200px; height: 200px; border-radius: 50%; border: 3px solid var(--cyan); overflow: hidden;
+      box-shadow: 0 0 28px rgba(6, 182, 212, 0.35), 0 0 60px rgba(109, 40, 217, 0.2); z-index: 2; position: relative;
+    }
+    .orbit-icon {
+      position: absolute; width: 44px; height: 44px; border-radius: 50%; background: rgba(6, 182, 212, 0.12);
+      border: 1.5px solid rgba(6, 182, 212, 0.4); display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--cyan); transition: .3s; cursor: default; box-shadow: 0 0 12px rgba(6, 182, 212, 0.15);
+    }
+    .orbit-icon:hover { background: rgba(6, 182, 212, 0.25); box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); transform: scale(1.12); }
+    
+    .oi-1 { top: 0px; left: 50%; transform: translateX(-50%); }
+    .oi-2 { top: 38px; right: 18px; }
+    .oi-3 { bottom: 38px; right: 18px; }
+    .oi-4 { bottom: 0px; left: 50%; transform: translateX(-50%); }
+    .oi-5 { bottom: 38px; left: 18px; }
+    .oi-6 { top: 38px; left: 18px; }
+    
+    .photo-tag {
+      position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); background: var(--bg2);
+      border: 1px solid var(--border); border-radius: 20px; padding: .38rem .95rem; font-family: 'DM Mono', monospace;
+      font-size: .66rem; color: var(--cyan); white-space: nowrap; letter-spacing: .07em; z-index: 3;
+    }
 
-        body.in-dashboard {
-            background: var(--bg-dash);
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-        body.in-dashboard #portfolio-view { display: none; }
-        body.in-dashboard #dashboard-view { display: flex; min-height: 100vh; }
+    /* CLOCK */
+    .clock-wrap { display: flex; flex-direction: column; align-items: center; gap: .7rem; margin-top: 2rem; }
+    .clock-label { font-family: 'DM Mono', monospace; font-size: .65rem; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; }
+    .clock-face {
+      width: 110px; height: 110px; border-radius: 50%; background: rgba(13, 13, 28, 0.9); border: 1.5px solid rgba(109, 40, 217, 0.35);
+      box-shadow: 0 0 20px rgba(109, 40, 217, 0.15), inset 0 0 12px rgba(109, 40, 217, 0.08); position: relative; overflow: hidden;
+    }
+    .clock-face::before {
+      content: ''; position: absolute; inset: 0; border-radius: 50%; background: repeating-conic-gradient(rgba(167, 139, 250, 0.25) 0deg 1deg, transparent 1deg 30deg);
+    }
+    .clock-center { position: absolute; top: 50%; left: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--purple-xl); transform: translate(-50%, -50%); z-index: 10; box-shadow: 0 0 6px var(--purple-xl); }
+    .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px 4px 0 0; }
+    .hand-h { width: 3px; height: 28px; background: var(--purple-xl); margin-left: -1.5px; box-shadow: 0 0 6px var(--purple-xl); }
+    .hand-m { width: 2px; height: 36px; background: #e2e8f0; margin-left: -1px; box-shadow: 0 0 4px rgba(226, 232, 240, 0.5); }
+    .hand-s { width: 1px; height: 40px; background: var(--cyan); margin-left: -.5px; box-shadow: 0 0 6px var(--cyan); }
+    .clock-digital { font-family: 'DM Mono', monospace; font-size: 1rem; font-weight: 500; letter-spacing: .12em; color: var(--text); }
+    .clock-date { font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--muted); letter-spacing: .08em; }
 
-        /* Scrollbar custom */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #070711; }
-        ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 4px; }
+    /* SECTIONS STRUCTURE */
+    section { position: relative; z-index: 1; }
+    .sw { max-width: 1100px; margin: 0 auto; padding: 6rem 3rem; }
+    .slabel {
+      font-family: 'DM Mono', monospace; font-size: .66rem; letter-spacing: .2em; color: var(--cyan);
+      text-transform: uppercase; margin-bottom: .65rem; display: flex; align-items: center; gap: .7rem;
+    }
+    .slabel::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--cyan); }
+    .stitle {
+      font-size: clamp(1.7rem, 3.8vw, 2.7rem); font-weight: 700; line-height: 1.15;
+      background: linear-gradient(135deg, #fff 40%, var(--purple-xl)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2.3rem;
+    }
 
-        /* ==========================================
-           1. PORTFOLIO INTERFACE STYLES 
-           ========================================== */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(7,7,17,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(109,40,217,0.2);
-        }
-        .logo { font-family: 'DM Mono', monospace; font-size: 1rem; color: #fff; text-decoration: none; letter-spacing: .1em; }
-        .logo em { color: #a78bfa; font-style: normal; }
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-        .nav-links a { color: var(--muted-gray); text-decoration: none; font-size: .8rem; font-family: 'DM Mono', monospace; text-transform: uppercase; transition: 0.2s; }
-        .nav-links a:hover { color: #a78bfa; }
-        
-        .sw { max-width: 1100px; margin: 0 auto; padding: 6rem 3rem; }
-        section { position: relative; }
-        .slabel { font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--cyan); letter-spacing: .2em; text-transform: uppercase; margin-bottom: .5rem; display: flex; align-items: center; gap: .5rem; }
-        .slabel::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--cyan); }
-        .stitle { font-size: 2.2rem; font-weight: 700; background: linear-gradient(135deg, #fff 40%, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem; }
+    #about { background: linear-gradient(to bottom, var(--bg), var(--bg2)); }
+    .agrid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .atext p { color: var(--muted); line-height: 1.9; font-size: .9rem; margin-bottom: .85rem; }
+    .icard {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.7rem; backdrop-filter: blur(12px); position: relative; overflow: hidden;
+    }
+    .icard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, var(--purple), transparent); }
+    .irow { display: flex; align-items: center; gap: .85rem; padding: .75rem 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .irow:last-child { border-bottom: none; }
+    .iico { width: 33px; height: 33px; border-radius: 8px; background: rgba(109,40,217,.15); display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; }
+    .ilbl { font-family: 'DM Mono', monospace; font-size: .63rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .12rem; }
+    .ival { font-size: .84rem; font-weight: 500; }
 
-        /* Hero */
-        #home { min-height: 100vh; display: flex; align-items: center; padding: 0 3rem; background: radial-gradient(circle at 80% 50%, rgba(109,40,217,0.15), transparent 50%); }
-        .hname { font-size: 3.5rem; font-weight: 800; line-height: 1.1; }
-        .hname .n2 { background: linear-gradient(120deg, #a78bfa, var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hrole { font-family: 'DM Mono', monospace; font-size: 1rem; color: var(--muted-gray); margin: 1rem 0; }
-        .hdesc { font-size: .9rem; color: var(--muted-gray); line-height: 1.8; max-width: 500px; }
-        .hcta { margin-top: 1.5rem; display: flex; gap: 1rem; }
-        .btn-p { padding: .75rem 1.5rem; background: var(--purple); color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: .85rem; box-shadow: 0 4px 15px rgba(109,40,217,0.3); transition: 0.2s; }
-        .btn-p:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(109,40,217,0.5); }
-        .btn-o { padding: .75rem 1.5rem; border: 1px solid rgba(167,139,250,0.4); color: #a78bfa; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: .85rem; transition: 0.2s; cursor: pointer; background: transparent; }
-        .btn-o:hover { background: rgba(109,40,217,0.1); transform: translateY(-2px); }
+    #skills { background: var(--bg2); }
+    .skgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 1.2rem; }
+    .skcard { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; transition: .3s; position: relative; overflow: hidden; }
+    .skcard:hover { border-color: var(--purple-l); transform: translateY(-3px); box-shadow: 0 8px 26px rgba(109,40,217,.15); }
+    .skcat { font-family: 'DM Mono', monospace; font-size: .64rem; letter-spacing: .15em; color: var(--cyan); text-transform: uppercase; margin-bottom: 1rem; }
+    .ski { margin-bottom: .8rem; }
+    .skrow { display: flex; justify-content: space-between; margin-bottom: .35rem; }
+    .skname { font-size: .82rem; font-weight: 500; }
+    .skpct { font-family: 'DM Mono', monospace; font-size: .71rem; color: var(--purple-xl); }
+    .skbar { height: 3px; background: rgba(255,255,255,.07); border-radius: 3px; overflow: hidden; }
+    .sk-fill { height: 100%; width: 0; border-radius: 3px; background: linear-gradient(to right, var(--purple), var(--cyan)); transition: width 1.3s cubic-bezier(.4, 0, .2, 1); }
 
-        /* Projects Grid Setup */
-        #projects { background: #0b0b18; }
-        .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
-        .pcard { background: rgba(13,13,28,0.7); border: 1px solid rgba(94,163,184,0.1); border-radius: 14px; overflow: hidden; transition: .3s; display: flex; flex-direction: column; justify-content: space-between; }
-        .pcard:hover { transform: translateY(-5px); border-color: rgba(139,92,246,0.4); box-shadow: 0 10px 25px rgba(109,40,217,0.25); }
-        .pthumb { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; background: linear-gradient(145deg, rgba(24,24,54,0.6), rgba(13,13,28,0.9)); position: relative; }
-        .pbody { padding: 1.2rem; flex-grow: 1; display: flex; flex-direction: column; }
-        .ptags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 0.8rem; }
-        .tag { padding: .15rem .6rem; border-radius: 20px; font-size: .65rem; font-family: 'DM Mono', monospace; background: rgba(109,40,217,0.12); border: 1px solid rgba(109,40,217,0.25); color: #a78bfa; }
-        .pname { font-size: 1.1rem; font-weight: 600; margin-bottom: .4rem; color: #fff; }
-        .pdesc { font-size: .8rem; color: var(--muted-gray); line-height: 1.6; margin-bottom: 1rem; }
-        
-        /* Highlight Feature Class for Finance Trigger */
-        .pcard.premium-feature { border: 1px dashed var(--accent-blue); background: linear-gradient(180deg, rgba(13,13,28,0.8) 0%, rgba(7,127,255,0.05) 100%); }
+    #projects { background: linear-gradient(to bottom, var(--bg2), var(--bg)); }
+    .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.4rem; }
+    .pcard { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: .3s; display: flex; flex-direction: column; justify-content: space-between; }
+    .pcard:hover { transform: translateY(-5px); border-color: rgba(139, 92, 246, 0.4); box-shadow: 0 12px 34px rgba(109, 40, 217, 0.2); }
+    .pthumb { height: 148px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; position: relative; overflow: hidden; background: rgba(255,255,255,0.01); }
+    .pthumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(13, 13, 28, 0.85)); }
+    .pbody { padding: 1.2rem; flex-grow: 1; }
+    .ptags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .75rem; }
+    .tag { padding: .16rem .58rem; border-radius: 20px; font-size: .64rem; font-family: 'DM Mono', monospace; background: rgba(109,40,217,.12); border: 1px solid rgba(109,40,217,.25); color: var(--purple-xl); }
+    .pname { font-size: 1.05rem; font-weight: 600; margin-bottom: .38rem; color: #fff; }
+    .pdesc { font-size: .78rem; color: var(--muted); line-height: 1.7; }
+    .plinks { display: flex; gap: .85rem; margin-top: 1rem; padding: 0 1.2rem 1.2rem; }
+    .plink { color: var(--purple-xl); text-decoration: none; font-size: .74rem; font-family: 'DM Mono', monospace; transition: .2s; cursor: pointer; background: transparent; border: none; }
+    .plink:hover { color: #fff; }
 
-        /* Jadwal */
-        #jadwal { background: #070711; }
-        .jgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
-        .jday { background: rgba(13,13,28,0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; }
-        .jhead { padding: .8rem 1.2rem; background: rgba(109,40,217,0.2); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        .jslots { padding: .8rem 1.2rem; display: flex; flex-direction: column; gap: .5rem; }
-        .slot { display: grid; grid-template-columns: 90px 1fr; gap: .5rem; padding: .5rem; background: rgba(255,255,255,0.02); border-radius: 6px; font-size: 0.8rem; }
-        .stime { color: var(--cyan); font-family: 'DM Mono', monospace; }
+    #jadwal { background: var(--bg2); }
+    .jnote { padding: .8rem 1.2rem; background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.18); border-radius: 8px; font-family: 'DM Mono', monospace; font-size: .74rem; color: var(--cyan); margin-bottom: 1.8rem; display: flex; align-items: center; gap: .6rem; }
+    .jgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .jday { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .jhead { padding: .8rem 1.2rem; background: rgba(109,40,217,0.15); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+    .jdname { font-weight: 700; font-size: .86rem; display: flex; align-items: center; gap: .5rem; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--purple-xl); box-shadow: 0 0 7px var(--purple-xl); }
+    .jcount { font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--muted); }
+    .jslots { padding: .8rem 1.2rem; display: flex; flex-direction: column; gap: .48rem; }
+    .slot { display: grid; grid-template-columns: 112px 1fr; gap: .65rem; align-items: start; padding: .55rem .75rem; border-radius: 7px; background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.04); transition: .2s; }
+    .slot:hover { background: rgba(109,40,217,.07); border-color: var(--border); }
+    .stime { font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--cyan); padding-top: .08rem; }
+    .ssubj { font-size: .82rem; font-weight: 500; }
 
-        /* Contact */
-        #contact { padding: 5rem 2rem; text-align: center; background: #05050d; }
+    #contact { background: linear-gradient(to bottom, var(--bg2), var(--bg)); text-align: center; }
+    .cdesc { font-size: .9rem; color: var(--muted); line-height: 1.85; max-width: 460px; margin: .85rem auto 0; }
+    .clinks { display: flex; justify-content: center; flex-wrap: wrap; gap: .8rem; margin-top: 2.2rem; }
+    .ccard { padding: .75rem 1.4rem; background: var(--card); border: 1px solid var(--border); border-radius: 10px; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: .55rem; font-size: .83rem; font-weight: 500; transition: .25s; }
+    .ccard:hover { border-color: rgba(139, 92, 246, 0.5); background: rgba(109, 40, 217, 0.1); transform: translateY(-2px); }
+    
+    footer { padding: 1.6rem 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--muted); }
+    footer a { color: var(--purple-xl); text-decoration: none; }
 
-        /* ==========================================
-           2. FINANCIAL DASHBOARD STYLES (FinTrack)
-           ========================================== */
-        .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 24px 0; position: fixed; top: 0; left: 0; z-index: 10; }
-        .db-logo { padding: 0 20px 22px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
-        .db-logo .brand { font-size: 18px; font-weight: 800; color: #fff; }
-        .db-logo .brand span { color: var(--accent-blue); }
-        .db-nav { flex: 1; padding: 0 10px; overflow-y: auto; list-style: none; }
-        .nav-section { font-size: 10px; font-weight: 600; color: var(--muted-gray); padding: 0 10px; margin: 16px 0 5px; text-transform: uppercase; letter-spacing: .05em; }
-        .db-nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; cursor: pointer; color: var(--muted-gray); transition: all .15s; margin-bottom: 2px; font-size: 13.5px; font-weight: 500; }
-        .db-nav-item:hover, .db-nav-item.active { background: rgba(79,127,255,0.12); color: var(--accent-blue); }
-        
-        .main-dash { margin-left: var(--sidebar-w); flex: 1; padding: 28px 32px; max-width: calc(100vw - var(--sidebar-w)); background: var(--bg-dash); }
-        .db-page { display: none; }
-        .db-page.active { display: block; }
-        
-        .topbar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-        .pg-title { font-size: 22px; font-weight: 700; color: #fff; }
-        .nw-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 16px 22px; min-width: 280px; }
-        .nw-value { font-size: 26px; font-weight: 800; color: #fff; margin-top: 4px; }
-        
-        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 20px; }
-        .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-        
-        /* Table styles */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { text-align: left; padding: 10px; color: var(--muted-gray); font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
-        td { padding: 12px 10px; color: #fff; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        
-        .badge-status { padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
-        .badge-status.income { background: rgba(52,211,153,0.15); color: var(--green); }
-        .badge-status.expense { background: rgba(248,113,113,0.15); color: var(--red); }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .reveal { opacity: 0; transform: translateY(22px); transition: .6s cubic-bezier(.4, 0, .2, 1); }
+    .reveal.in { opacity: 1; transform: none; }
 
-        /* Responsive Design Rules */
-        @media (max-width: 850px) {
-            nav { padding: 1rem 1.5rem; }
-            .nav-links { display: none; }
-            .sw { padding: 4rem 1.5rem; }
-            .grid-2 { grid-template-columns: 1fr; }
-            .sidebar { width: 70px; }
-            .sidebar .lbl, .sidebar .tagline, .sidebar .nav-section { display: none; }
-            .main-dash { margin-left: 70px; max-width: calc(100vw - 70px); padding: 15px; }
-            .topbar { flex-direction: column; gap: 15px; }
-        }
-    </style>
+    /* CORE RESPONSIVE & MOBILE TABLET FIX */
+    @media (max-width: 850px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column; position: fixed; top: 60px; left: 0; right: 0;
+        background: rgba(7, 7, 17, 0.96); padding: 2rem; border-bottom: 1px solid var(--border); z-index: 99; gap: 1.5rem;
+      }
+      .ham { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
+      .hphoto { order: -1; display: flex; justify-content: center; margin: 0 auto; }
+      .hdesc, .heta { max-width: none; justify-content: center; }
+      .clock-wrap { align-items: center; }
+      .agrid { grid-template-columns: 1fr; gap: 2rem; }
+      .jgrid { grid-template-columns: 1fr; }
+      .sw { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    /* CRITICAL BUGFIX: MOBILE LANDSCAPE VIEW (HP MIRING KE KANAN) */
+    @media (max-height: 520px) and (orientation: landscape) {
+      #home { min-height: auto; padding-top: 6.5rem; padding-bottom: 3rem; overflow: visible; }
+      .hero-inner { grid-template-columns: 1.2fr 1fr; text-align: left; gap: 2rem; align-items: center; }
+      .hphoto { order: 1; width: 220px; height: 220px; display: flex; justify-content: center; align-items: center; }
+      .orbit-ring { width: 200px; height: 200px; }
+      .photo-circle { width: 135px; height: 135px; border-width: 2px; }
+      .orbit-icon { width: 30px; height: 30px; font-size: 0.85rem; }
+      
+      /* Re-mapping orbit coordinates for downscaled 200px landscape container */
+      .oi-1 { top: 0px; left: 50%; transform: translateX(-50%); }
+      .oi-2 { top: 26px; right: 8px; }
+      .oi-3 { bottom: 26px; right: 8px; }
+      .oi-4 { bottom: 0px; left: 50%; transform: translateX(-50%); }
+      .oi-5 { bottom: 26px; left: 8px; }
+      .oi-6 { top: 26px; left: 8px; }
+      
+      .photo-tag { bottom: -12px; padding: .2rem .6rem; font-size: .58rem; }
+      h1.hname { font-size: 2.1rem; }
+      .hdesc { font-size: 0.8rem; max-width: 100%; margin-top: 0.6rem; }
+      .hcta { margin-top: 1rem; justify-content: flex-start; }
+      .clock-wrap { display: none; } /* Dismount analog widget on low-height landscape screens to free viewport */
+    }
+
+    /* INTERACTIVE FINTRACK MODAL SYSTEM SCENE */
+    .ft-modal {
+      position: fixed; inset: 0; z-index: 2000; background: #0f1117; display: none;
+      flex-direction: column; font-family: 'Plus Jakarta Sans', sans-serif; color: #f0f2f8; overflow: hidden;
+    }
+    .ft-modal.active { display: flex; }
+    .ft-header {
+      background: #181c27; padding: 0.75rem 1.5rem; display: flex; justify-content: space-between;
+      align-items: center; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .ft-brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 0.95rem; }
+    .ft-dot { width: 8px; height: 8px; background: #4f7fff; border-radius: 50%; }
+    .ft-close {
+      background: rgba(248, 113, 113, 0.15); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3);
+      padding: 0.4rem 0.9rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: 0.2s;
+    }
+    .ft-close:hover { background: #f87171; color: #0f1117; }
+    
+    .ft-body { display: flex; flex: 1; overflow: hidden; }
+    .ft-sidebar { width: 230px; background: #181c27; border-right: 1px solid rgba(255,255,255,0.07); display: flex; flex-direction: column; padding: 1.5rem 0.8rem; justify-content: space-between; }
+    .ft-nav { display: flex; flex-direction: column; gap: 0.35rem; }
+    .ft-item {
+      padding: 0.7rem 0.9rem; border-radius: 8px; color: #8a90a8; font-size: 0.85rem; font-weight: 500;
+      cursor: pointer; display: flex; align-items: center; gap: 0.6rem; transition: all 0.15s;
+    }
+    .ft-item:hover, .ft-item.active { background: rgba(79, 127, 255, 0.09); color: #4f7fff; }
+    
+    .ft-toggle-box { padding: 1rem 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .ft-switch-lbl { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: #8a90a8; cursor: pointer; }
+    
+    .ft-main { flex: 1; padding: 2rem; overflow-y: auto; background: #0f1117; }
+    .ft-page { display: none; }
+    .ft-page.active { display: block; }
+    
+    /* FINTRACK SUB-COMPONENTS */
+    .ft-mgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+    .ft-mcard { background: #181c27; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.25rem; }
+    .ft-mlbl { font-size: 0.72rem; color: #8a90a8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+    .ft-mval { font-size: 1.4rem; font-weight: 700; color: #f0f2f8; }
+    .ft-msub { font-size: 0.72rem; margin-top: 0.3rem; display: flex; gap: 0.3rem; }
+    
+    .ft-chgrid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.25rem; margin-bottom: 2rem; }
+    @media (max-width: 950px) {
+      .ft-chgrid { grid-template-columns: 1fr; }
+      .ft-sidebar { width: 68px; }
+      .ft-item span, .ft-brand span, .ft-toggle-box { display: none; }
+      .ft-item { justify-content: center; font-size: 1.1rem; }
+    }
+    .ft-chbox { background: #181c27; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.25rem; }
+    .ft-chtitle { font-size: 0.88rem; font-weight: 600; color: #f0f2f8; margin-bottom: 1rem; }
+    .ft-chwrap { position: relative; height: 240px; width: 100%; }
+    
+    .ft-tbl-box { background: #181c27; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.25rem; }
+    .ft-table { width: 100%; border-collapse: collapse; }
+    .ft-table th { font-size: 0.75rem; text-transform: uppercase; color: #8a90a8; text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .ft-table td { padding: 0.9rem 1rem; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    
+    /* BANK CONNECTION GRID */
+    .ft-bgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .ft-bcard { background: #1f2435; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1.1rem; display: flex; justify-content: space-between; align-items: center; }
+    .ft-bname { font-size: 0.88rem; font-weight: 600; }
+    .ft-btn-sm { padding: 0.35rem 0.75rem; font-size: 0.72rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: #fff; cursor: pointer; transition: 0.2s; }
+    .ft-btn-sm.connected { background: rgba(52, 211, 153, 0.12); border-color: #34d399; color: #34d399; }
+    
+    /* SETTINGS COMPONENT */
+    .ft-stbox { display: flex; gap: 2rem; background: #181c27; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.5rem; min-height: 300px; }
+    .ft-sttabs { display: flex; flex-direction: column; gap: 0.4rem; width: 180px; border-right: 1px solid rgba(255,255,255,0.06); padding-right: 1rem; }
+    .ft-sttab { padding: 0.6rem 0.8rem; font-size: 0.82rem; color: #8a90a8; border-radius: 6px; cursor: pointer; }
+    .ft-sttab.active { background: rgba(255,255,255,0.04); color: #fff; font-weight: 600; }
+    .ft-stpane { flex: 1; display: none; }
+    .ft-stpane.active { display: block; }
+  </style>
 </head>
 <body>
+  <canvas id="cv"></canvas>
+  
+  <nav>
+    <a class="logo" href="#home">ZAA<em>.</em></a>
+    <ul class="nav-links" id="nl">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#jadwal">Jadwal</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="ham" id="ham" aria-label="menu"><span></span><span></span><span></span></button>
+  </nav>
 
-    <div id="portfolio-view">
-        <nav>
-            <a class="logo" href="#home">ZAA<em>.</em></a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#jadwal">Jadwal</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class="btn-p" onclick="openDashboard()" style="padding: 0.5rem 1rem;">Demo FinTrack</button>
-        </nav>
+  <section id="home">
+    <div class="blob1"></div><div class="blob2"></div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">👋 Open for Collaboration</div>
+        <h1 class="hname"><span class="n1">Zuhri</span><span class="n2">Abdussalam Ashari</span></h1>
+        <div class="hrole"><span id="typed"></span><span class="cur">|</span></div>
+        <p class="hdesc">Mahasiswa Sistem Informasi Universitas Komputama Majenang. Aktif di penelitian IoT, pengembangan web, dan kewirausahaan berbasis teknologi. Passionate menciptakan solusi digital yang berdampak nyata.</p>
+        <div class="hcta">
+          <a href="#projects" class="btn-p">Lihat Projects</a>
+          <a href="#contact" class="btn-o">Hubungi Saya</a>
+        </div>
+        
+        <div class="clock-wrap">
+          <div class="clock-label">Waktu Sekarang &mdash; WIB</div>
+          <div style="position: relative; width: 110px; height: 110px; margin: 0.5rem 0;">
+            <div class="clock-face">
+              <div class="hand hand-h" id="hh"></div>
+              <div class="hand hand-m" id="hm"></div>
+              <div class="hand hand-s" id="hs"></div>
+              <div class="clock-center"></div>
+            </div>
+          </div>
+          <div class="clock-digital" id="dig-time">00:00:00</div>
+          <div class="clock-date">&mdash;</div>
+        </div>
+      </div>
 
-        <section id="home" class="sw">
+      <div class="hphoto">
+        <div class="orbit-ring"></div>
+        <div class="orbit-icon oi-1" title="Education">🎓</div>
+        <div class="orbit-icon oi-2" title="Tech">💻</div>
+        <div class="orbit-icon oi-3" title="Portfolio">💼</div>
+        <div class="orbit-icon oi-4" title="Tools">🛠️</div>
+        <div class="orbit-icon oi-5" title="IoT">📡</div>
+        <div class="orbit-icon oi-6" title="Research">🔬</div>
+        
+        <div class="photo-circle">
+          <svg viewBox="0 0 100 100" style="width:100%; height:100%; background:#131326; display:block;">
+            <defs>
+              <linearGradient id="avGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6d28d9" />
+                <stop offset="100%" stop-color="#06b6d4" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+            <circle cx="50" cy="38" r="16" fill="url(#avGrad)" />
+            <path d="M22,78 C22,60 34,56 50,56 C66,56 78,60 78,78 C78,82 78,85 78,85 L22,85 Z" fill="url(#avGrad)" opacity="0.85"/>
+            <path d="M38,36 L62,36" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="#06b6d4" stroke-width="1" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+        <div class="photo-tag">Full-Stack Dev / IoT</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sw">
+      <div class="slabel">Identity</div>
+      <h2 class="stitle">Tentang Saya</h2>
+      <div class="agrid reveal">
+        <div class="atext">
+          <p>Saya adalah seorang pengembang perangkat lunak tingkat senior berorientasi hasil yang fokus pada efisiensi, skalabilitas, dan implementasi dunia nyata [cite: 2026-02-02]. Saat ini sedang menempuh studi dan mengintegrasikan sistem modular berbasis teknologi otomasi.</p>
+          <p>Keahlian saya mencakup perancangan multi-tenant SaaS architecture menggunakan Laravel, pembuatan dashboard interaktif berbasis ekosistem React/Next.js, serta pengembangan perangkat IoT industri menggunakan node mikrokontroler tingkat lanjut.</p>
+        </div>
+        <div class="icard">
+          <div class="irow">
+            <div class="iico">👤</div>
             <div>
-                <h1 class="hname">Zuhri <span class="n2">Abdussalam Ashari</span></h1>
-                <div class="hrole">System Information Student • Fullstack Developer • IoT Tech Enthusiast</div>
-                <p class="hdesc">
-                    Mahasiswa Sistem Informasi di Universitas Komputama Majenang. Berfokus pada arsitektur SaaS menggunakan Laravel & Ecosystem modern, monitoring IoT, dan pengolahan data sistematis.
-                </p>
-                <div class="hcta">
-                    <a href="#projects" class="btn-p">Lihat Projects & Core Aplikasi</a>
-                    <a href="#contact" class="btn-o">Hubungi Saya</a>
-                </div>
+              <div class="ilbl">Nama Lengkap</div>
+              <div class="ival">Zuhri Abdussalam Ashari</div>
             </div>
-        </section>
-
-        <section id="about" class="sw">
-            <div class="slabel">Kualifikasi</div>
-            <div class="stitle">Tentang Saya</div>
-            <p class="hdesc" style="max-width: 100%;">Mengintegrasikan kapabilitas software engineering tingkat lanjut dengan analisis finansial dan fungsionalitas otomasi perangkat keras untuk melahirkan efisiensi operasional.</p>
-        </section>
-
-        <section id="projects" class="sw">
-            <div class="slabel">Showcase Sistem</div>
-            <div class="stitle">Proyek Pilihan</div>
-            
-            <div class="pgrid">
-                <div class="pcard premium-feature">
-                    <div class="pthumb">📊</div>
-                    <div class="pbody">
-                        <div class="ptags">
-                            <span class="tag">SaaS Core</span>
-                            <span class="tag">Chart.js</span>
-                            <span class="tag">Financial ERP</span>
-                        </div>
-                        <div class="pname">FinTrack Engine Enterprise</div>
-                        <div class="pdesc">Sistem pengelolaan keuangan multi-tenant dengan kalkulasi HPP real-time, visualisasi analitik data dinamis, dan pelacakan neraca kas terpadu.</div>
-                        <button class="btn-p" onclick="openDashboard()" style="width: 100%; text-align: center; cursor: pointer; border: none;">
-                            Buka Aplikasi Keuangan →
-                        </button>
-                    </div>
-                </div>
-
-                <div class="pcard">
-                    <div class="pthumb">🪱</div>
-                    <div class="pbody">
-                        <div class="ptags">
-                            <span class="tag">IoT</span>
-                            <span class="tag">ESP32</span>
-                            <span class="tag">Blynk</span>
-                        </div>
-                        <div class="pname">Smart-Maggot Automated IoT</div>
-                        <div class="pdesc">Otomasi sistem monitoring suhu, kelembaban, dan kadar amonia pada biopond budidaya Maggot BSF guna mendongkrak produktivitas panen secara optimal.</div>
-                        <a href="#contact" class="plink" style="margin-top:auto; text-decoration:none; color:var(--cyan); font-size:12px;">Pelajari Lebih Lanjut</a>
-                    </div>
-                </div>
-
-                <div class="pcard">
-                    <div class="pthumb">🚀</div>
-                    <div class="pbody">
-                        <div class="ptags">
-                            <span class="tag">Laravel 11</span>
-                            <span class="tag">Next.js</span>
-                            <span class="tag">SaaS</span>
-                        </div>
-                        <div class="pname">IAGRI PRO Platform</div>
-                        <div class="pdesc">Arsitektur multi-tenant SaaS terintegrasi untuk pengelolaan agribisnis, peternakan, dan perikanan berskala industri modern.</div>
-                        <a href="#contact" class="plink" style="margin-top:auto; text-decoration:none; color:var(--cyan); font-size:12px;">Pelajari Lebih Lanjut</a>
-                    </div>
-                </div>
+          </div>
+          <div class="irow">
+            <div class="iico">🏫</div>
+            <div>
+              <div class="ilbl">Institusi Kampus</div>
+              <div class="ival">Universitas Komputama Majenang</div>
             </div>
-        </section>
-
-        <section id="jadwal" class="sw">
-            <div class="slabel">Akademik</div>
-            <div class="stitle">Jadwal Kuliah Efektif</div>
-            <div class="jgrid">
-                <div class="jday">
-                    <div class="jhead"><div class="jdname">Senin</div></div>
-                    <div class="jslots">
-                        <div class="slot"><span class="stime">07:30 – 09:10</span><span class="ssubj">Algoritma & Pemrograman</span></div>
-                        <div class="slot"><span class="stime">09:10 – 10:50</span><span class="ssubj">Matematika Diskrit</span></div>
-                        <div class="slot"><span class="stime">13:00 – 14:40</span><span class="ssubj">Basis Data</span></div>
-                    </div>
-                </div>
-                <div class="jday">
-                    <div class="jhead"><div class="jdname">Selasa</div></div>
-                    <div class="jslots">
-                        <div class="slot"><span class="stime">08:00 – 10:30</span><span class="ssubj">Interaksi Manusia & Komputer</span></div>
-                    </div>
-                </div>
+          </div>
+          <div class="irow">
+            <div class="iico">🎯</div>
+            <div>
+              <div class="ilbl">Fokus Utama</div>
+              <div class="ival">SaaS Architecture & Industrial IoT System</div>
             </div>
-        </section>
-
-        <section id="contact">
-            <h2 class="stitle" style="margin-bottom:1rem;">Mari Berkolaborasi</h2>
-            <p class="hdesc" style="margin: 0 auto 2rem;">Siap mengonversi ide kompleks Anda menjadi ekosistem perangkat lunak yang andal dan terukur.</p>
-            <a href="mailto:zuhri@example.com" class="btn-p">Kirim Email Bisnis</a>
-        </section>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-
-    <div id="dashboard-view">
-        <aside class="sidebar">
-            <div class="db-logo">
-                <div class="brand">Fin<span>Track</span></div>
-                <div class="tagline">Enterprise Dashboard</div>
-            </div>
-            <ul class="db-nav">
-                <div class="nav-section">Utama</div>
-                <li class="db-nav-item active" onclick="switchTab(this, 'db-overview')">
-                    <span>🏠</span> <span class="lbl">Ringkasan Kas</span>
-                </li>
-                <li class="db-nav-item" onclick="switchTab(this, 'db-transactions')">
-                    <span>💸</span> <span class="lbl">Arus Transaksi</span>
-                </li>
-                <li class="db-nav-item" onclick="switchTab(this, 'db-analytics')">
-                    <span>📈</span> <span class="lbl">Analitik Laba</span>
-                </li>
-                
-                <div class="nav-section" style="margin-top: 30px;">Sistem</div>
-                <li class="db-nav-item" onclick="closeDashboard()" style="color: var(--cyan); background: rgba(6,182,212,0.08); margin-top: 20px;">
-                    <span>⬅️</span> <span class="lbl" style="font-weight: 700;">Keluar Aplikasi</span>
-                </li>
-            </ul>
-        </aside>
-
-        <main class="main-dash">
-            <div class="topbar">
-                <div>
-                    <div style="font-size: 12px; color: var(--muted-gray);">Selamat Datang Kembali,</div>
-                    <div class="pg-title">Zuhri Abdussalam Ashari</div>
-                </div>
-                <div class="nw-card">
-                    <div style="font-size: 11px; text-transform: uppercase; color: var(--muted-gray); font-weight:600;">Total Kekayaan Bersih</div>
-                    <div class="nw-value">Rp 148.250.000</div>
-                </div>
-            </div>
-
-            <div id="db-overview" class="db-page active">
-                <div class="grid-2">
-                    <div class="panel">
-                        <div style="font-weight:600; font-size:14px; margin-bottom:15px; color:#fff;">Tren Arus Kas Bulanan</div>
-                        <div style="position: relative; height: 260px; width: 100%;">
-                            <canvas id="financialChart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <div class="panel">
-                        <div style="font-weight:600; font-size:14px; margin-bottom:15px; color:#fff;">Distribusi Aset</div>
-                        <div style="padding: 10px 0;">
-                            <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-                                <span style="font-size:13px;">Kas Utama</span>
-                                <span style="font-weight:600; color:var(--accent-blue);">75%</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-                                <span style="font-size:13px;">Alokasi IoT R&D</span>
-                                <span style="font-weight:600; color:var(--purple);">15%</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between;">
-                                <span style="font-size:13px;">SaaS Infrastructure</span>
-                                <span style="font-weight:600; color:var(--cyan);">10%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel" style="margin-top: 20px;">
-                    <div style="font-weight:600; font-size:14px; margin-bottom:15px; color:#fff;">Mutasi Transaksi Finansial Terakhir</div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Deskripsi Aktivitas</th>
-                                <th>Kategori Aliran</th>
-                                <th>Nilai Nominal</th>
-                                <th>Status Berkas</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Penerimaan Dana Termin 1 — Pengembangan SaaS IAGRI</td>
-                                <td>Pendapatan</td>
-                                <td style="color: var(--green); font-weight:600;">+Rp 25.000.000</td>
-                                <td><span class="badge-status income">Selesai</span></td>
-                            </tr>
-                            <tr>
-                                <td>Restrukturisasi Hardware & Sensor Komponen Smart-Maggot</td>
-                                <td>Pengeluaran R&D</td>
-                                <td style="color: var(--red); font-weight:600;">-Rp 3.450.000</td>
-                                <td><span class="badge-status expense">Sukses</span></td>
-                            </tr>
-                            <tr>
-                                <td>Langganan Server Cloud VPS & Cluster Database (Multi-Tenant)</td>
-                                <td>Infrastruktur</td>
-                                <td style="color: var(--red); font-weight:600;">-Rp 1.200.000</td>
-                                <td><span class="badge-status expense">Sukses</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="db-transactions" class="db-page">
-                <div class="panel">
-                    <h3 style="color:#fff; margin-bottom:15px;">Data Ledger Transaksi Lengkap</h3>
-                    <p style="color: var(--muted-gray); font-size:13px;">Modul manajemen data ledger komprehensif, terintegrasi langsung ke sistem repositori database aplikasi.</p>
-                </div>
-            </div>
-
-            <div id="db-analytics" class="db-page">
-                <div class="panel">
-                    <h3 style="color:#fff; margin-bottom:15px;">Matriks Analitik Laba & HPP Proyek</h3>
-                    <p style="color: var(--muted-gray); font-size:13px;">Halaman komputasi proyeksi margin profitabilitas bisnis agribisnis dan efisiensi energi IoT secara komparatif.</p>
-                </div>
-            </div>
-        </main>
+  <section id="skills">
+    <div class="sw">
+      <div class="slabel">Expertise</div>
+      <h2 class="stitle">Keahlian Teknis</h2>
+      <div class="skgrid">
+        <div class="skcard reveal">
+          <div class="skcat">Backend Stack</div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">Laravel (Repository Pattern)</span><span class="skpct">92%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 92%"></div></div>
+          </div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">Multi-Tenant SaaS / RESTful API</span><span class="skpct">88%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 88%"></div></div>
+          </div>
+        </div>
+        <div class="skcard reveal">
+          <div class="skcat">Frontend Stack</div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">React / Next.js (Tailwind)</span><span class="skpct">85%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 85%"></div></div>
+          </div>
+        </div>
+        <div class="skcard reveal">
+          <div class="skcat">Hardware & Infrastructure</div>
+          <div class="ski">
+            <div class="skrow"><span class="skname">IoT (ESP32-S3 / Blynk / Sensors)</span><span class="skpct">90%</span></div>
+            <div class="skbar"><div class="sk-fill" style="width: 90%"></div></div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <script>
-        // global instance chart handler
-        let financeChartInstance = null;
+  <section id="projects">
+    <div class="sw">
+      <div class="slabel">Showcase</div>
+      <h2 class="stitle">Proyek Pilihan</h2>
+      <div class="pgrid">
+        <div class="pcard reveal">
+          <div class="pthumb">🪱</div>
+          <div class="pbody">
+            <div class="ptags"><span class="tag">IoT</span><span class="tag">ESP32-S3</span><span class="tag">P2MW 2026</span></div>
+            <h3 class="pname">Smart-Maggot IoT System</h3>
+            <p class="pdesc">Sistem monitoring parameter internal otomatis (suhu, kelembaban, amonia) pada kluster biopond budidaya Maggot BSF menggunakan chip ESP32-S3 untuk optimasi pakan sektor peternakan.</p>
+          </div>
+        </div>
+        <div class="pcard reveal">
+          <div class="pthumb">🌾</div>
+          <div class="pbody">
+            <div class="ptags"><span class="tag">Laravel 12</span><span class="tag">SaaS Architecture</span><span class="tag">ERP</span></div>
+            <h3 class="pname">IAGRI PRO</h3>
+            <p class="pdesc">Sistem ERP agribisnis multi-tenant berskala industrial untuk pengelolaan ekosistem pertanian, perikanan, peternakan terintegrasi dengan penghitungan real-time HPP otomatis.</p>
+          </div>
+        </div>
+        <div class="pcard reveal">
+          <div class="pthumb">📊</div>
+          <div class="pbody">
+            <div class="ptags"><span class="tag">Chart.js</span><span class="tag">Financial App</span><span class="tag">UI/UX</span></div>
+            <h3 class="pname">FinTrack — Dashboard Keuangan</h3>
+            <p class="pdesc">Dashboard manajemen keuangan modern berskala korporat untuk visualisasi multi-rekening, pelacakan real-time cashflow, alokasi pengeluaran, serta proteksi privasi saldo.</p>
+          </div>
+          <div class="plinks">
+            <button onclick="openFinTrackApp()" class="btn-p" style="width:100%; font-size:0.75rem; padding:0.5rem;">Launch Live Core Engine</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        /**
-         * State Transition: Buka Dashboard Keuangan & Matikan View Portfolio
-         */
-        function openDashboard() {
-            document.body.classList.add('in-dashboard');
-            window.scrollTo(0, 0);
-            
-            // Inisialisasi Chart.js saat sistem dashboard pertama kali dimuat
-            setTimeout(initializeFinancialChart, 100);
+  <section id="jadwal">
+    <div class="sw">
+      <div class="slabel">Academic</div>
+      <h2 class="stitle">Jadwal Kuliah</h2>
+      <div class="jnote">ℹ️ Sinkronisasi otomatis berbasis waktu client perangkat.</div>
+      <div class="jgrid reveal">
+        <div class="jday">
+          <div class="jhead"><div class="jdname"><div class="dot"></div>Senin</div><span class="jcount">3 Mata Kuliah</span></div>
+          <div class="jslots">
+            <div class="slot"><span class="stime">07.30 – 09.10</span><span class="ssubj">Algoritma & Pemrograman</span></div>
+            <div class="slot"><span class="stime">09.10 – 10.50</span><span class="ssubj">Matematika Diskrit</span></div>
+            <div class="slot"><span class="stime">13.00 – 14.40</span><span class="ssubj">Basis Data</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sw">
+      <div class="slabel">Network</div>
+      <h2 class="stitle">Hubungi Saya</h2>
+      <p class="cdesc">Hubungi saya untuk diskusi teknis, kolaborasi proyek SaaS, integrasi IoT industri, atau peluang riset bersama [cite: 2026-02-02].</p>
+      <div class="clinks reveal">
+        <a href="#" class="ccard">📧 <span>zuhri.ashari@komputama.ac.id</span></a>
+        <a href="#" class="ccard">💼 <span>LinkedIn</span></a>
+        <a href="#" class="ccard">💻 <span>GitHub</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>&copy; 2026 Zuhri Abdussalam Ashari. All Rights Reserved.</div>
+    <div>Designed for High-Performance Environments.</div>
+  </footer>
+
+  <div id="fintrack-modal" class="ft-modal">
+    <div class="ft-header">
+      <div class="ft-brand"><div class="ft-dot"></div><span>FinTrack — Dashboard Keuangan</span></div>
+      <button class="ft-close" onclick="closeFinTrackApp()">Exit Application</button>
+    </div>
+    <div class="ft-body">
+      <aside class="ft-sidebar">
+        <div class="ft-nav">
+          <div class="ft-item active" data-ftpage="summary" onclick="routeFtPage('summary')">📊 <span>Ringkasan</span></div>
+          <div class="ft-item" data-ftpage="connect" onclick="routeFtPage('connect')">🔗 <span>Hubungkan Akun</span></div>
+          <div class="ft-item" data-ftpage="payment" onclick="routeFtPage('payment')">💳 <span>Metode Bayar</span></div>
+          <div class="ft-item" data-ftpage="activity" onclick="routeFtPage('activity')">📝 <span>Aktivitas</span></div>
+          <div class="ft-item" data-ftpage="settings" onclick="routeFtPage('settings')">⚙️ <span>Pengaturan</span></div>
+        </div>
+        <div class="ft-toggle-box">
+          <label class="ft-switch-lbl">
+            <span>Sembunyikan Saldo</span>
+            <input type="checkbox" id="ftHideToggle" onchange="toggleFtBalanceShield()">
+          </label>
+        </div>
+      </aside>
+
+      <main class="ft-main">
+        <div id="ft-page-summary" class="ft-page active">
+          <div class="ft-mgrid">
+            <div class="ft-mcard">
+              <div class="ft-mlbl">Total Saldo</div>
+              <div class="ft-mval ft-bal-val">Rp 142.500.000</div>
+              <div class="ft-msub text-green"><span>+2.4%</span> dari bulan lalu</div>
+            </div>
+            <div class="ft-mcard">
+              <div class="ft-mlbl">Pemasukan Bulan Ini</div>
+              <div class="ft-mval">Rp 24.800.000</div>
+              <div class="ft-msub text-green"><span>+12.5%</span> target tercapai</div>
+            </div>
+            <div class="ft-mcard">
+              <div class="ft-mlbl">Pengeluaran Bulan Ini</div>
+              <div class="ft-mval">Rp 11.250.000</div>
+              <div class="ft-msub text-red"><span>-4.3%</span> terkendali</div>
+            </div>
+            <div class="ft-mcard">
+              <div class="ft-mlbl">Investasi Aktif</div>
+              <div class="ft-mval">Rp 35.000.000</div>
+              <div class="ft-msub text-green"><span>+8.2%</span> yield pertumbuhan</div>
+            </div>
+          </div>
+          
+          <div class="ft-chgrid">
+            <div class="ft-chbox">
+              <div class="ft-chtitle">Arus Kas Masuk & Keluar</div>
+              <div class="ft-chwrap"><canvas id="cfChart"></canvas></div>
+            </div>
+            <div class="ft-chbox">
+              <div class="ft-chtitle">Kategori Pengeluaran</div>
+              <div class="ft-chwrap"><canvas id="expChart"></canvas></div>
+            </div>
+          </div>
+
+          <div class="ft-tbl-box">
+            <div class="ft-chtitle" style="margin-bottom: 0.8rem;">Aktivitas Transaksi Terbaru</div>
+            <table class="ft-table">
+              <thead>
+                <tr><th>Deskripsi</th><th>Kategori</th><th>Tanggal</th><th>Jumlah</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Pembelian Bahan Baku Tokopedia</td><td>Belanja</td><td>10 Jun 2026</td><td class="text-red">-Rp 450.000</td></tr>
+                <tr><td>Gaji Utama Rekayasa Sistem</td><td>Pemasukan</td><td>05 Jun 2026</td><td class="text-green">+Rp 18.500.000</td></tr>
+                <tr><td>Starbucks Coffee Landscape</td><td>Makanan</td><td>02 Jun 2026</td><td class="text-red">-Rp 85.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="ft-page-connect" class="ft-page">
+          <h3>Hubungkan Rekening Bank & Finansial</h3>
+          <p style="color: #8a90a8; font-size: 0.85rem; margin-bottom: 1.5rem;">Otomatisasi rekonsiliasi data mutasi transaksi menggunakan secure API link banking.</p>
+          <div class="ft-bgrid">
+            <div class="ft-bcard"><span class="ft-bname">Bank BCA</span><button class="ft-btn-sm connected">Terhubung</button></div>
+            <div class="ft-bcard"><span class="ft-bname">Bank Mandiri</span><button class="ft-btn-sm connected">Terhubung</button></div>
+            <div class="ft-bcard"><span class="ft-bname">Bank Jago</span><button class="ft-btn-sm">Hubungkan</button></div>
+            <div class="ft-bcard"><span class="ft-bname">BNI E-Banking</span><button class="ft-btn-sm">Hubungkan</button></div>
+          </div>
+        </div>
+
+        <div id="ft-page-payment" class="ft-page">
+          <h3>Metode Pembayaran Tersimpan</h3>
+          <p style="color: #8a90a8; font-size: 0.85rem; margin-bottom: 1.5rem;">Kelola instrumen pembayaran elektronik, kartu kredit, kartu debit, dan dompet digital.</p>
+          <div class="ft-tbl-box">
+            <table class="ft-table">
+              <thead><tr><th>Metode</th><th>Tipe</th><th>Status</th><th>Aksi</th></tr></thead>
+              <tbody>
+                <tr><td>Visa Corporation (•••• 4321)</td><td>Kartu Kredit</td><td><span class="text-green">Aktif</span></td><td><button class="ft-btn-sm">Hapus</button></td></tr>
+                <tr><td>ShopeePay Mitra Bisnis</td><td>e-Wallet</td><td><span class="text-green">Aktif</span></td><td><button class="ft-btn-sm">Konfigurasi</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="ft-page-activity" class="ft-page">
+          <h3>Log Transaksi Historis Lengkap</h3>
+          <p style="color: #8a90a8; font-size: 0.85rem; margin-bottom: 1.5rem;">Audit log finansial terenkripsi end-to-end.</p>
+          <div class="ft-tbl-box">
+            <table class="ft-table">
+              <thead><tr><th>Waktu</th><th>Item</th><th>Kategori</th><th>Status</th><th>Nominal</th></tr></thead>
+              <tbody>
+                <tr><td>10 Jun 2026 14:22</td><td>Server Hosting Cloud Multi-Tenant</td><td>Infrastruktur</td><td>Sukses</td><td class="text-red">-Rp 1.200.000</td></tr>
+                <tr><td>08 Jun 2026 09:15</td><td>Pembayaran Lion Parcel Top-Up Kiosk</td><td>Logistik</td><td>Sukses</td><td class="text-green">+Rp 5.400.000</td></tr>
+                <tr><td>05 Jun 2026 18:00</td><td>Gaji Utama Rekayasa Sistem</td><td>Pemasukan</td><td>Sukses</td><td class="text-green">+Rp 18.500.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="ft-page-settings" class="ft-page">
+          <h3>Pengaturan Sistem FinTrack</h3>
+          <div class="ft-stbox" style="margin-top: 1.25rem;">
+            <div class="ft-sttabs">
+              <div class="ft-sttab active" id="stb-gen" onclick="routeFtSetting('gen')">Umum</div>
+              <div class="ft-sttab" id="stb-not" onclick="routeFtSetting('not')">Notifikasi</div>
+              <div class="ft-sttab" id="stb-sec" onclick="routeFtSetting('sec')">Privasi & Keamanan</div>
+            </div>
+            <div class="ft-stcontent">
+              <div id="ft-pane-gen" class="ft-stpane active"><p style="font-size:0.88rem;">Konfigurasi mata uang default, singkronisasi zona waktu Asia/Jakarta, dan ekspor data laporan dalam format CSV/Excel.</p></div>
+              <div id="ft-pane-not" class="ft-stpane"><p style="font-size:0.88rem;">Sistem notifikasi alert pengeluaran bulanan melewati batas ambang batas limit (Over-budget warning).</p></div>
+              <div id="ft-pane-sec" class="ft-stpane"><p style="font-size:0.88rem; color:#f87171;">Otentikasi dua faktor (2FA) aktif. Modul Enkripsi database AES-256 berjalan otomatis.</p></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ── BACKGROUND PARTICLES EFFECT ──
+    const canvas = document.getElementById('cv');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let pts = [];
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      for(let i=0; i<45; i++) {
+        pts.push({
+          x: Math.random()*canvas.width,
+          y: Math.random()*canvas.height,
+          vx: (Math.random()-0.5)*0.35,
+          vy: (Math.random()-0.5)*0.35,
+          r: Math.random()*1.6+0.4
+        });
+      }
+      function draw() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = 'rgba(167,139,250,0.18)';
+        pts.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if(p.x<0||p.x>canvas.width) p.vx*=-1;
+          if(p.y<0||p.y>canvas.height) p.vy*=-1;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    // ── MOBILE RESPONSIVE HAMBURGER MENU ──
+    const ham = document.getElementById('ham');
+    const nl = document.getElementById('nl');
+    if(ham && nl) {
+      ham.addEventListener('click', () => { nl.classList.toggle('open'); });
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => { nl.classList.remove('open'); });
+      });
+    }
+
+    // ── TEXT TYPING REVOLVING ANIMATION ──
+    const typedEl = document.getElementById('typed');
+    if(typedEl) {
+      const roles = ["Full-Stack Software Developer", "IoT Solutions Engineer", "SaaS Architect"];
+      let rIdx = 0, charIdx = 0, isDeleting = false;
+      function typeEngine() {
+        let current = roles[rIdx];
+        if(isDeleting) {
+          typedEl.textContent = current.substring(0, charIdx - 1);
+          charIdx--;
+        } else {
+          typedEl.textContent = current.substring(0, charIdx + 1);
+          charIdx++;
         }
-
-        /**
-         * State Transition: Tutup Dashboard Keuangan & Kembali Ke Portfolio
-         */
-        function closeDashboard() {
-            document.body.classList.remove('in-dashboard');
-            // Menuju langsung ke seksi projects portfolio setelah keluar
-            setTimeout(() => {
-                const projSec = document.getElementById('projects');
-                if(projSec) projSec.scrollIntoView({ behavior: 'smooth' });
-            }, 50);
+        let speed = isDeleting ? 30 : 75;
+        if(!isDeleting && charIdx === current.length) {
+          speed = 2200; isDeleting = true;
+        } else if(isDeleting && charIdx === 0) {
+          isDeleting = false; rIdx = (rIdx + 1) % roles.length; speed = 400;
         }
+        setTimeout(typeEngine, speed);
+      }
+      typeEngine();
+    }
 
-        /**
-         * Router Ringan Internal Dashboard (Tab Switching)
-         */
-        function switchTab(element, targetTabId) {
-            // Hapus status aktif dari semua menu sidebar
-            document.querySelectorAll('.db-nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            // Tambahkan status aktif pada menu yang diklik
-            element.classList.add('active');
+    // ── ANALOG & DIGITAL SYNCHRONIZED CLOCKS ──
+    function updateClockWidgets() {
+      const now = new Date();
+      const h = now.getHours();
+      const m = now.getMinutes();
+      const s = now.getSeconds();
+      
+      const hh = document.getElementById('hh');
+      const hm = document.getElementById('hm');
+      const hs = document.getElementById('hs');
+      
+      if(hh) hh.style.transform = `rotate(${(h % 12) * 30 + m * 0.5}deg)`;
+      if(hm) hm.style.transform = `rotate(${m * 6 + s * 0.1}deg)`;
+      if(hs) hs.style.transform = `rotate(${s * 6}deg)`;
+      
+      const pad = n => String(n).padStart(2, '0');
+      const dTime = document.getElementById('dig-time');
+      if(dTime) dTime.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+      
+      const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+      const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+      const dDate = document.querySelector('.clock-date');
+      if(dDate) dDate.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    }
+    setInterval(updateClockWidgets, 1000);
+    updateClockWidgets();
 
-            // Sembunyikan seluruh sub-halaman dashboard
-            document.querySelectorAll('.db-page').forEach(page => {
-                page.classList.remove('active');
-            });
-            // Tampilkan sub-halaman target secara instan
-            document.getElementById(targetTabId).classList.add('active');
-        }
+    // ── SCROLL REVEAL ANIMATOR RUNNER ──
+    const reveals = document.querySelectorAll('.reveal');
+    function triggerRevealEngine() {
+      reveals.forEach(r => {
+        let top = r.getBoundingClientRect().top;
+        if(top < window.innerHeight * 0.88) { r.classList.add('in'); }
+      });
+    }
+    window.addEventListener('scroll', triggerRevealEngine);
+    triggerRevealEngine();
 
-        /**
-         * Core Engine Visualisasi Analitik Keuangan (Chart.js)
-         */
-        function initializeFinancialChart() {
-            const ctx = document.getElementById('financialChart');
-            if (!ctx) return;
+    // ── INTERACTIVE FINTRACK CONTROLLER FUNCTIONS ──
+    function openFinTrackApp() {
+      const modal = document.getElementById('fintrack-modal');
+      if(modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        renderFinTrackCharts();
+      }
+    }
 
-            // Mencegah kebocoran memori dengan menghancurkan instance lama jika ada
-            if (financeChartInstance !== null) {
-                financeChartInstance.destroy();
+    function closeFinTrackApp() {
+      const modal = document.getElementById('fintrack-modal');
+      if(modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function routeFtPage(pageId) {
+      document.querySelectorAll('.ft-page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.ft-item').forEach(i => i.classList.remove('active'));
+      
+      const tPage = document.getElementById('ft-page-' + pageId);
+      const tItem = document.querySelector(`.ft-item[data-ftpage="${pageId}"]`);
+      if(tPage) tPage.classList.add('active');
+      if(tItem) tItem.classList.add('active');
+    }
+
+    function routeFtSetting(paneId) {
+      document.querySelectorAll('.ft-stpane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.ft-sttab').forEach(t => t.classList.remove('active'));
+      
+      const tPane = document.getElementById('ft-pane-' + paneId);
+      const tTab = document.getElementById('stb-' + paneId);
+      if(tPane) tPane.classList.add('active');
+      if(tTab) tTab.classList.add('active');
+    }
+
+    let cfInstance = null;
+    let expInstance = null;
+
+    function renderFinTrackCharts() {
+      // Line Chart Engine Injection
+      const cfCtx = document.getElementById('cfChart');
+      if(cfCtx) {
+        if(cfInstance) cfInstance.destroy();
+        cfInstance = new Chart(cfCtx.getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+            datasets: [
+              { label: 'Pemasukan', data: [15000000, 18000000, 12000000, 24000000, 20000000, 24800000], borderColor: '#34d399', backgroundColor: 'rgba(52, 211, 153, 0.06)', tension: 0.38, fill: true },
+              { label: 'Pengeluaran', data: [8000000, 9000000, 11000000, 10000000, 14000000, 11250000], borderColor: '#f87171', backgroundColor: 'rgba(248, 113, 113, 0.06)', tension: 0.38, fill: true }
+            ]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: '#8a90a8', font: { family: 'Plus Jakarta Sans' } } } },
+            scales: {
+              x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8a90a8' } },
+              y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8a90a8' } }
             }
+          }
+        });
+      }
 
-            financeChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-                    datasets: [
-                        {
-                            label: 'Pendapatan (SaaS & IoT)',
-                            data: [15000000, 22000000, 19000000, 28000000, 35000000, 42000000],
-                            borderColor: '#34d399',
-                            backgroundColor: 'rgba(52,211,153,0.05)',
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Pengeluaran Operasional',
-                            data: [8000000, 12000000, 9500000, 14000000, 11000000, 13000000],
-                            borderColor: '#f87171',
-                            backgroundColor: 'rgba(248,113,113,0.05)',
-                            tension: 0.3,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: { color: '#8a90a8', font: { family: 'Inter', size: 11 } }
-                        }
-                    },
-                    scales: {
-                        x: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#8a90a8' } },
-                        y: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#8a90a8' } }
-                    }
-                }
-            });
+      // Doughnut Chart Engine Injection
+      const expCtx = document.getElementById('expChart');
+      if(expCtx) {
+        if(expInstance) expInstance.destroy();
+        expInstance = new Chart(expCtx.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Belanja', 'Makanan', 'Investasi', 'Tagihan'],
+            datasets: [{ data: [25, 15, 40, 20], backgroundColor: ['#4f7fff', '#fbbf24', '#34d399', '#f87171'], borderWidth: 0 }]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { color: '#8a90a8', boxWidth: 10, font: { family: 'Plus Jakarta Sans', size: 11 } } } }
+          }
+        });
+      }
+    }
+
+    function toggleFtBalanceShield() {
+      const hideChecked = document.getElementById('ftHideToggle').checked;
+      const nodes = document.querySelectorAll('.ft-bal-val');
+      nodes.forEach(n => {
+        if(hideChecked) {
+          if(!n.dataset.origVal) n.dataset.origVal = n.textContent;
+          n.textContent = 'Rp •••••';
+        } else {
+          if(n.dataset.origVal) n.textContent = n.dataset.origVal;
         }
-    </script>
+      });
+    }
+  </script>
 </body>
 </html>
